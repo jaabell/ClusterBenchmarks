@@ -5,4 +5,6 @@ comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 size = comm.Get_size()
 
-print(f"Hi from rank {rank} of {size}.")
+with open("hello-{rank}-of-{size}.txt","w") as fid:
+
+	fid.write(f"Hi from rank {rank} of {size}.")
