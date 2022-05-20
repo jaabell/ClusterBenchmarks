@@ -64,6 +64,33 @@ for iteration in range(repeats):
 		print(f"     ---> error = {error}")
 
 with open(f"performance.{rank}.{size}.txt","w") as fid:
+	sum_write = sum(write_performances)
+	max_write = max(write_performances)
+	min_write = min(write_performances)
+	sum_read = sum(read_performances)
+	max_read = max(read_performances)
+	min_read = min(read_performances)
+
+	sum_write_global = comm.reduce(sum_write, op=MPI.SUM, root=0)
+	min_write_global = comm.reduce(min_write, op=MPI.MIN, root=0)
+	max_write_global = comm.reduce(max_write, op=MPI.MAX, root=0)
+
+	sum_read_global = comm.reduce(sum_read, op=MPI.SUM, root=0)
+	min_read_global = comm.reduce(min_read, op=MPI.MIN, root=0)
+	max_read_global = comm.reduce(max_read, op=MPI.MAX, root=0)
+
+	if rank == 0:
+		ave_write_global=sum_write_global/size
+		ave_read_global=sum_read_global/size
+		print(f"""Write MB/s -- 
+			average = {ave_write_global:.3f} 
+			min = {min_write_global:.3f} 
+			max = {max_write_global:.3f}\n""")
+		print(f"""Read MB/s -- 
+			average = {ave_read_global:.3f} 
+			min = {min_read_global:.3f} 
+			max = {max_read_global:.3f}\n""")
+
 	fid.write(f"rank = {rank} size = {size} hostname = {hostname}\n")
 	fid.write(f"Write MB/s -- average = {np.mean(write_performances):.3f}  std_dev = {np.std(write_performances):.3f}  min = {np.min(write_performances):.3f} max = {np.max(write_performances):.3f}\n")
 	fid.write(f"Read  MB/s -- average = {np.mean(read_performances):.3f}  std_dev = {np.std(read_performances):.3f}  min = {np.min(read_performances):.3f} max = {np.max(read_performances):.3f}\n")
