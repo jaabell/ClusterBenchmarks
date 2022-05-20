@@ -4,6 +4,8 @@ import os
 from sys import argv
 from mpi4py import MPI
 
+hostname = os.uname()[1]
+
 comm = MPI.COMM_WORLD
 
 rank = comm.Get_rank()
@@ -62,6 +64,6 @@ for iteration in range(repeats):
 		print(f"     ---> error = {error}")
 
 with open(f"performance.{rank}.{size}.txt","w") as fid:
-	fid.write(f"rank = {rank} size = {size}\n")
+	fid.write(f"rank = {rank} size = {size} hostname = {hostname}\n")
 	fid.write(f"Write MB/s -- average = {np.mean(write_performances):.3f}  std_dev = {np.std(write_performances):.3f}  min = {np.min(write_performances):.3f} max = {np.max(write_performances):.3f}\n")
 	fid.write(f"Read  MB/s -- average = {np.mean(read_performances):.3f}  std_dev = {np.std(read_performances):.3f}  min = {np.min(read_performances):.3f} max = {np.max(read_performances):.3f}\n")
