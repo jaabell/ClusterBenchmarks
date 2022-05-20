@@ -4,6 +4,6 @@
 #SBATCH --output=serial_test_%j.log   # Standard output and error log
 pwd; hostname; date
 
-mpirun python hello-mpi.py
+mpirun python hello_mpi.py
 
 date
