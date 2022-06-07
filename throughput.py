@@ -71,6 +71,7 @@ def client():
     host = sys.argv[3]
     exponent = 12
     if len(sys.argv) > 4:
+        exponent = eval(sys.argv[4])
         BUFSIZE = 2**exponent
     if len(sys.argv) > 5:
         port = eval(sys.argv[5])
