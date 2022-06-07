@@ -54,7 +54,7 @@ def server():
             if not data:
                 break
             del data
-        conn.send('OK\n')
+        conn.send('OK\n'.encode())
         conn.close()
         print('Done with', host, 'port', remoteport)
 
@@ -68,7 +68,7 @@ def client():
         port = eval(sys.argv[4])
     else:
         port = MY_PORT
-    testdata = bytes('x' * (BUFSIZE-1) + '\n')
+    testdata = 'x' * (BUFSIZE-1) + '\n'
     t1 = time.time()
     s = socket(AF_INET, SOCK_STREAM)
     t2 = time.time()
@@ -77,12 +77,12 @@ def client():
     i = 0
     while i < count:
         i = i+1
-        s.send(testdata)
+        s.send(testdata.encode())
     s.shutdown(1) # Send EOF
     t4 = time.time()
     data = s.recv(BUFSIZE)
     t5 = time.time()
-    print(data)
+    print(data.decode())
     print('Raw timers:', t1, t2, t3, t4, t5)
     print('Intervals:', t2-t1, t3-t2, t4-t3, t5-t4)
     print('Total:', t5-t1)
