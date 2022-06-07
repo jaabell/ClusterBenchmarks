@@ -3,8 +3,8 @@
 # Test network throughput.
 #
 # Usage:
-# 1) on host_A: throughput -s [port]                    # start a server
-# 2) on host_B: throughput -c  count host_A [port]      # start a client
+# 1) on host_A: throughput -s BUFSIZE [port]                    # start a server
+# 2) on host_B: throughput -c  count BUFSIZE host_A [port]      # start a client
 #
 # The server will service multiple clients until it is killed.
 #
@@ -68,7 +68,9 @@ def client():
     count = int(eval(sys.argv[2]))
     host = sys.argv[3]
     if len(sys.argv) > 4:
-        port = eval(sys.argv[4])
+        BUFSIZE = eval(sys.argv[4])
+    if len(sys.argv) > 5:
+        port = eval(sys.argv[5])
     else:
         port = MY_PORT
     testdata = 'x' * (BUFSIZE-1) + '\n'
