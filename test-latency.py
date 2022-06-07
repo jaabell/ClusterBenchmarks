@@ -1,3 +1,13 @@
+#! /usr/bin/env python
+
+# Test network latency.
+#
+# Usage:
+# test-latency.py ip count
+#
+
+
+
 import numpy
 import pexpect
 import system
