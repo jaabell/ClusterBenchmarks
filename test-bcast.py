@@ -36,7 +36,7 @@ for sz in sizes_of_sends:
         print(f"Rank 0 writing data for sz={sz}")
         if not os.path.exists(write_path):
             os.makedirs(write_path)
-        with open(write_path+"/test-bcast-size-{size}.txt","a") as fid:
+        with open(write_path+f"/test-bcast-size-{size}.txt","a") as fid:
             fid.write(f"{sz} {t2-t1}\n")
 
 
