@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=mpi-hello    # Job name
+#SBATCH --job-name=hello-mpi    # Job name
 #SBATCH --ntasks=8                    # Run on a single CPU
-#SBATCH --output=serial_test_%j.log   # Standard output and error log
+#SBATCH --output=hellompi_%j.log   # Standard output and error log
 pwd; hostname; date
 
-mpirun python hello_mpi.py
+mpirun python hello-mpi.py
 
 date
