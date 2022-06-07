@@ -17,6 +17,7 @@ time_taken = []
 for sz in sizes_of_sends:
 
     if rank == 0:
+        print(f"Broadcast test for sz={sz}")
         data = np.arange(sz, dtype='i')
     else:
         data = np.empty(sz, dtype='i')
@@ -31,6 +32,8 @@ for sz in sizes_of_sends:
 
 
     if rank == 0:
+
+        print(f"Rank 0 writing data for sz={sz}")
         if not os.path.exists(write_performances):
             os.makedirs(write_path)
         with open(write_path+"/test-bcast-size-{size}.txt","a") as fid:
