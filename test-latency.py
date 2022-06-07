@@ -10,7 +10,7 @@
 
 import numpy
 import pexpect
-import system
+import sys
 
 
 class NetworkLatencyBenchmark(object):
