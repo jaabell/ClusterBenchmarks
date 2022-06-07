@@ -10,7 +10,7 @@ size = comm.Get_size()
 
 check = False
 write_path = "./results-bcast"
-sizes_of_sends = [100, 1000, 10000, 1000000, 10000000]
+sizes_of_sends = [10**i for i in range(1,8)]
 nrepeats = 4
 
 
