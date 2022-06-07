@@ -10,35 +10,38 @@ size = comm.Get_size()
 
 check = False
 write_path = "./results-bcast"
-sizes_of_sends = [100, 1000, 10000, 1000000]
+sizes_of_sends = [100, 1000, 10000, 1000000, 10000000]
+nrepeats = 4
+
 
 time_taken = []
 
-for sz in sizes_of_sends:
+for repeat in range(nrepeats):
+    for sz in sizes_of_sends:
 
-    if rank == 0:
-        print(f"Broadcast test for sz={sz}")
-        data = np.arange(sz, dtype='i')
-    else:
-        data = np.empty(sz, dtype='i')
+        if rank == 0:
+            print(f"Broadcast test for sz={sz}")
+            data = np.arange(sz, dtype='i')
+        else:
+            data = np.empty(sz, dtype='i')
 
-    t1 = perf_counter()
-    comm.Bcast(data, root=0)
-    t2 = perf_counter()
+        t1 = perf_counter()
+        comm.Bcast(data, root=0)
+        t2 = perf_counter()
 
-    if check:
-        for i in range(sz):
-            assert data[i] == i
-
-
-    if rank == 0:
-
-        print(f"Rank 0 writing data for sz={sz}")
-        if not os.path.exists(write_path):
-            os.makedirs(write_path)
-        with open(write_path+f"/test-bcast-size-{size}.txt","a") as fid:
-            fid.write(f"{sz} {t2-t1}\n")
+        if check:
+            for i in range(sz):
+                assert data[i] == i
 
 
+        if rank == 0:
 
-print(f"Rank {rank} of {size} done")
+            print(f"Rank 0 writing data for sz={sz}")
+            if not os.path.exists(write_path):
+                os.makedirs(write_path)
+            with open(write_path+f"/test-bcast-size-{size}.txt","a") as fid:
+                fid.write(f"{sz} {t2-t1}\n")
+
+
+
+    print(f"Rank {rank} of {size} done with repeat {repeat}")
