@@ -1,7 +1,7 @@
 from mpi4py import MPI
 import numpy as np
 from time import perf_counter
-
+import os
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
@@ -9,7 +9,7 @@ size = comm.Get_size()
 
 
 check = False
-
+write_path = "./results-bcast"
 sizes_of_sends = [100, 1000, 10000, 1000000]
 
 time_taken = []
@@ -31,7 +31,9 @@ for sz in sizes_of_sends:
 
 
     if rank == 0:
-        with open("test-bcast-size-{size}.txt","a") as fid:
+    	if not os.path.exists(write_performances):
+    		os.makedirs(write_path)
+        with open(write_path+"/test-bcast-size-{size}.txt","a") as fid:
             fid.write(f"{sz} {t2-t1}\n")
 
 
