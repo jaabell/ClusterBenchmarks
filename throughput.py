@@ -68,7 +68,7 @@ def client():
         port = eval(sys.argv[4])
     else:
         port = MY_PORT
-    testdata = 'x' * (BUFSIZE-1) + '\n'
+    testdata = bytes('x' * (BUFSIZE-1) + '\n')
     t1 = time.time()
     s = socket(AF_INET, SOCK_STREAM)
     t2 = time.time()
