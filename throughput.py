@@ -82,12 +82,13 @@ def client():
     t4 = time.time()
     data = s.recv(BUFSIZE)
     t5 = time.time()
+    throughput = round((BUFSIZE*count*1e-6) / (t5-t1), 3)
     print(data.decode())
     print('Raw timers:', t1, t2, t3, t4, t5)
     print('Intervals:', t2-t1, t3-t2, t4-t3, t5-t4)
     print('Total:', t5-t1)
-    print('Throughput:', round((BUFSIZE*count*0.001) / (t5-t1), 3),)
-    print('K/sec.')
+    print(f'Throughput: {throughput} Mbyte/sec  {throughput*8} Mbit/sec')
+    print()
 
 
 main()
