@@ -33,14 +33,17 @@ def main():
 
 def usage():
     sys.stdout = sys.stderr
-    print('Usage:    (on host_A) throughput -s [port]')
-    print('and then: (on host_B) throughput -c count host_A [port]')
+    print('Usage:    (on host_A) throughput -s BUFSIZE [port]')
+    print('and then: (on host_B) throughput -c count host_A BUFSIZE [port]')
     sys.exit(2)
 
 
-def server():
+def server():    
+
     if len(sys.argv) > 2:
-        port = eval(sys.argv[2])
+        BUFSIZE = eval(sys.argv[2])
+    if len(sys.argv) > 3:
+        port = eval(sys.argv[3])
     else:
         port = MY_PORT
     s = socket(AF_INET, SOCK_STREAM)
