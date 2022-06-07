@@ -41,7 +41,7 @@ def usage():
 def server():    
 
     if len(sys.argv) > 2:
-        BUFSIZE = eval(sys.argv[2])
+        BUFSIZE = 2**eval(sys.argv[2])
     if len(sys.argv) > 3:
         port = eval(sys.argv[3])
     else:
@@ -68,7 +68,7 @@ def client():
     count = int(eval(sys.argv[2]))
     host = sys.argv[3]
     if len(sys.argv) > 4:
-        BUFSIZE = eval(sys.argv[4])
+        BUFSIZE = 2**eval(sys.argv[4])
     if len(sys.argv) > 5:
         port = eval(sys.argv[5])
     else:
