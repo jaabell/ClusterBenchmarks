@@ -49,7 +49,7 @@ def server():
     s = socket(AF_INET, SOCK_STREAM)
     s.bind(('', port))
     s.listen(1)
-    print('Server ready...')
+    print(f'Server ready port={port} BUFSIZE={BUFSIZE} ')
     while 1:
         conn, (host, remoteport) = s.accept()
         while 1:
