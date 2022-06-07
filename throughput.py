@@ -40,8 +40,10 @@ def usage():
 
 def server():    
 
+    exponent = 12
     if len(sys.argv) > 2:
-        BUFSIZE = 2**eval(sys.argv[2])
+        exponent = eval(sys.argv[2])
+    BUFSIZE = 2**exponent
     if len(sys.argv) > 3:
         port = eval(sys.argv[3])
     else:
@@ -49,7 +51,7 @@ def server():
     s = socket(AF_INET, SOCK_STREAM)
     s.bind(('', port))
     s.listen(1)
-    print(f'Server ready port={port} BUFSIZE={BUFSIZE} ')
+    print(f'Server ready port={port} BUFSIZE={BUFSIZE} exponent={exponent}')
     while 1:
         conn, (host, remoteport) = s.accept()
         while 1:
@@ -67,13 +69,16 @@ def client():
         usage()
     count = int(eval(sys.argv[2]))
     host = sys.argv[3]
+    exponent = 12
     if len(sys.argv) > 4:
-        BUFSIZE = 2**eval(sys.argv[4])
+        BUFSIZE = 2**exponent
     if len(sys.argv) > 5:
         port = eval(sys.argv[5])
     else:
         port = MY_PORT
     testdata = 'x' * (BUFSIZE-1) + '\n'
+    print(f"Client sending BUFSIZE={BUFSIZE} exponent={exponent}")
+
     t1 = time.time()
     s = socket(AF_INET, SOCK_STREAM)
     t2 = time.time()
@@ -88,7 +93,6 @@ def client():
     data = s.recv(BUFSIZE)
     t5 = time.time()
     throughput = round((BUFSIZE*count*1e-6) / (t5-t1), 3)
-    print(data.decode())
     print('Raw timers:', t1, t2, t3, t4, t5)
     print('Intervals:', t2-t1, t3-t2, t4-t3, t5-t4)
     print('Total:', t5-t1)
